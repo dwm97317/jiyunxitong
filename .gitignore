@@ -1,0 +1,41 @@
+# 图片文件（images 文件夹除外）
+/*.png
+/*.jpg
+/*.jpeg
+/*.gif
+/*.svg
+/*.ico
+
+# 日志文件
+*.log
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# IDE 配置
+.vscode/
+.kiro/
+
+# 临时文件和工作文档
+*GUIDE.md
+*SUMMARY.md
+*REPORT.md
+*RESULTS.md
+*COMPARISON*.md
+*INSPECTION*.md
+*SCORE*.md
+github-token-setup.md
+upload-*.md
+upload-*.ps1
+upload-*.json
+next-prompt.md
+
+# 队列文件夹（已处理）
+queue/
+
+# 项目配置
+stitch.json
+
+# 开发文档（保留重要的）
+!README.md
