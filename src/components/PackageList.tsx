@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ChevronLeft, MoreHorizontal, Circle, Search, Scan, Copy, MapPin, Truck } from 'lucide-react';
 
 export default function PackageList({ onNavigate }: { onNavigate: (screen: string) => void }) {
@@ -9,7 +9,7 @@ export default function PackageList({ onNavigate }: { onNavigate: (screen: strin
     <div className="bg-[#F5F5F5] min-h-full pb-20 font-sans">
       {/* Header */}
       <div className="bg-white px-4 py-3 flex items-center justify-between sticky top-0 z-10">
-        <ChevronLeft className="w-6 h-6 cursor-pointer" onClick={() => {}} />
+        <ChevronLeft className="w-6 h-6 cursor-pointer" onClick={() => onNavigate('home')} />
         <h1 className="text-[17px] font-medium">我的快递</h1>
         <div className="flex items-center gap-1.5 border border-gray-200 rounded-full px-2.5 py-1">
           <MoreHorizontal className="w-4 h-4 text-black" />

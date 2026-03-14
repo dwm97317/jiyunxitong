@@ -1,4 +1,3 @@
-import React from 'react';
 import { ChevronLeft, MoreHorizontal, Circle, Image as ImageIcon, Zap } from 'lucide-react';
 
 export default function Scanner({ onBack }: { onBack: () => void }) {

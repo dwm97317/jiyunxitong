@@ -1,4 +1,3 @@
-import React from 'react';
 import { ChevronLeft, MoreHorizontal, Circle } from 'lucide-react';
 
 export default function OrderDetail({ onBack }: { onBack: () => void }) {

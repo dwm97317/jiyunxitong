@@ -1,4 +1,3 @@
-import React from 'react';
 import { Package, Search, Home as HomeIcon, Truck } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
 import LanguageSwitcher from './LanguageSwitcher';

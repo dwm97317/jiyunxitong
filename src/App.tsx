@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { LanguageProvider } from './i18n/LanguageContext';
 import HomePage from './components/HomePage';
 import OrderDetail from './components/OrderDetail';
 import PackageList from './components/PackageList';
 import Scanner from './components/Scanner';
-import PlaceholderScreen from './components/PlaceholderScreen';
+import CheckExpress from './components/CheckExpress';
+import LogisticsTracking from './components/LogisticsTracking';
+import WarehouseManagement from './components/WarehouseManagement';
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState('home');
@@ -38,32 +40,14 @@ export default function App() {
           </div>
         </div>
 
-        <div className="h-full w-full pt-11 overflow-y-auto overflow-x-hidden relative hide-scrollbar">
+        <div className={`h-full w-full ${['checkExpress', 'warehouse', 'logistics'].includes(currentScreen) ? '' : 'pt-11'} overflow-y-auto overflow-x-hidden relative hide-scrollbar`}>
           {currentScreen === 'home' && <HomePage onNavigate={setCurrentScreen} />}
           {currentScreen === 'orderDetail' && <OrderDetail onBack={() => setCurrentScreen('packageList')} />}
           {currentScreen === 'packageList' && <PackageList onNavigate={setCurrentScreen} />}
           {currentScreen === 'scanner' && <Scanner onBack={() => setCurrentScreen('packageList')} />}
-          {currentScreen === 'checkExpress' && (
-            <PlaceholderScreen 
-              title="查快递功能 / Track Express"
-              description="此功能位于独立项目中 / This feature is in a separate project"
-              onBack={() => setCurrentScreen('home')}
-            />
-          )}
-          {currentScreen === 'warehouse' && (
-            <PlaceholderScreen 
-              title="仓库管理功能 / Warehouse Management"
-              description="此功能位于独立项目中 / This feature is in a separate project"
-              onBack={() => setCurrentScreen('home')}
-            />
-          )}
-          {currentScreen === 'logistics' && (
-            <PlaceholderScreen 
-              title="物流追踪功能 / Logistics Tracking"
-              description="此功能位于独立项目中 / This feature is in a separate project"
-              onBack={() => setCurrentScreen('home')}
-            />
-          )}
+          {currentScreen === 'checkExpress' && <CheckExpress onBack={() => setCurrentScreen('home')} onNavigate={setCurrentScreen} />}
+          {currentScreen === 'warehouse' && <WarehouseManagement onBack={() => setCurrentScreen('home')} />}
+          {currentScreen === 'logistics' && <LogisticsTracking onBack={() => setCurrentScreen('checkExpress')} />}
         </div>
 
         {/* Home Indicator Mock */}
