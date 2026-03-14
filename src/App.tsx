@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
+import { LanguageProvider } from './i18n/LanguageContext';
 import HomePage from './components/HomePage';
 import OrderDetail from './components/OrderDetail';
 import PackageList from './components/PackageList';
 import Scanner from './components/Scanner';
+import PlaceholderScreen from './components/PlaceholderScreen';
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState('home');
 
   return (
-    <div className="min-h-screen bg-gray-200 flex items-center justify-center p-4 font-sans">
+    <LanguageProvider>
+      <div className="min-h-screen bg-gray-200 flex items-center justify-center p-4 font-sans">
       <div className="w-full max-w-[375px] h-[812px] bg-white rounded-[40px] shadow-2xl overflow-hidden relative border-[8px] border-gray-900">
         {/* Status Bar Mock */}
         <div className={`h-11 w-full flex justify-between items-center px-6 absolute top-0 left-0 z-50 ${currentScreen === 'scanner' ? 'text-white' : 'text-black'}`}>
@@ -41,40 +44,25 @@ export default function App() {
           {currentScreen === 'packageList' && <PackageList onNavigate={setCurrentScreen} />}
           {currentScreen === 'scanner' && <Scanner onBack={() => setCurrentScreen('packageList')} />}
           {currentScreen === 'checkExpress' && (
-            <div className="p-6 text-center">
-              <h2 className="text-xl font-bold mb-4">查快递功能</h2>
-              <p className="text-gray-600 mb-4">此功能位于独立项目中</p>
-              <button 
-                onClick={() => setCurrentScreen('home')}
-                className="px-6 py-2 bg-indigo-600 text-white rounded-lg"
-              >
-                返回首页
-              </button>
-            </div>
+            <PlaceholderScreen 
+              title="查快递功能 / Track Express"
+              description="此功能位于独立项目中 / This feature is in a separate project"
+              onBack={() => setCurrentScreen('home')}
+            />
           )}
           {currentScreen === 'warehouse' && (
-            <div className="p-6 text-center">
-              <h2 className="text-xl font-bold mb-4">仓库管理功能</h2>
-              <p className="text-gray-600 mb-4">此功能位于独立项目中</p>
-              <button 
-                onClick={() => setCurrentScreen('home')}
-                className="px-6 py-2 bg-indigo-600 text-white rounded-lg"
-              >
-                返回首页
-              </button>
-            </div>
+            <PlaceholderScreen 
+              title="仓库管理功能 / Warehouse Management"
+              description="此功能位于独立项目中 / This feature is in a separate project"
+              onBack={() => setCurrentScreen('home')}
+            />
           )}
           {currentScreen === 'logistics' && (
-            <div className="p-6 text-center">
-              <h2 className="text-xl font-bold mb-4">物流追踪功能</h2>
-              <p className="text-gray-600 mb-4">此功能位于独立项目中</p>
-              <button 
-                onClick={() => setCurrentScreen('home')}
-                className="px-6 py-2 bg-indigo-600 text-white rounded-lg"
-              >
-                返回首页
-              </button>
-            </div>
+            <PlaceholderScreen 
+              title="物流追踪功能 / Logistics Tracking"
+              description="此功能位于独立项目中 / This feature is in a separate project"
+              onBack={() => setCurrentScreen('home')}
+            />
           )}
         </div>
 
@@ -82,5 +70,6 @@ export default function App() {
         <div className={`absolute bottom-2 left-1/2 -translate-x-1/2 w-[120px] h-1.5 rounded-full z-50 ${currentScreen === 'scanner' ? 'bg-white' : 'bg-black'}`}></div>
       </div>
     </div>
+    </LanguageProvider>
   );
 }
