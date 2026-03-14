@@ -39,3 +39,6 @@ stitch.json
 
 # 开发文档（保留重要的）
 !README.md
+
+.node_modules/
+
