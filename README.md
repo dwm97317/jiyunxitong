@@ -1,35 +1,20 @@
-# 集运中心 App - React 组件库
+<div align="center">
+<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+</div>
 
-使用 Stitch Loop 技能将 UI 截图转换为 React 组件。
+# Run and deploy your AI Studio app
 
-## 项目结构
+This contains everything you need to run your app locally.
 
-```
-├── DESIGN.md           # 设计系统文档
-├── SITE.md             # 站点愿景和路线图
-├── next-prompt.md      # 接力棒文件（当前任务）
-├── stitch.json         # Stitch 项目配置
-├── queue/              # Stitch 生成的临时文件
-│   ├── *.html
-│   └── *.png
-└── site/
-    └── src/
-        └── components/ # React 组件
-            └── *.jsx
-```
+View your app in AI Studio: https://ai.studio/apps/70b9ba9a-64c6-47fe-b0dc-93bb8b6a24e2
 
-## 已完成组件
+## Run Locally
 
-- [x] HomePersonal.jsx - 首页-个人件
+**Prerequisites:**  Node.js
 
-## 使用方法
 
-1. 查看 `next-prompt.md` 了解下一个要生成的页面
-2. 运行 stitch-loop 循环生成下一个组件
-3. 组件会自动保存到 `site/src/components/`
-
-## 技术栈
-
-- React
-- Tailwind CSS
-- Google Material Symbols Icons
+1. Install dependencies:
+   `npm install`
+2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+3. Run the app:
+   `npm run dev`
