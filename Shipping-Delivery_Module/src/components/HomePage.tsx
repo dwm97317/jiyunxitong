@@ -1,8 +1,10 @@
+import { useState, useEffect } from 'react';
 import { Package, Search, Home as HomeIcon, Truck } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
 import LanguageSwitcher from './LanguageSwitcher';
 import BottomNavBar from './BottomNavBar';
 import ProjectCard from './ProjectCard';
+import ProjectCardSkeleton from './ProjectCardSkeleton';
 
 interface HomePageProps {
   onNavigate: (screen: string) => void;
@@ -11,7 +13,14 @@ interface HomePageProps {
 
 export default function HomePage({ onNavigate, onModuleChange }: HomePageProps) {
   const { t } = useLanguage();
+  const [isLoading, setIsLoading] = useState(true);
   
+  useEffect(() => {
+    // Simulate initial data loading
+    const timer = setTimeout(() => setIsLoading(false), 800);
+    return () => clearTimeout(timer);
+  }, []);
+
   const projects = [
     {
       id: 'packageList',
@@ -61,13 +70,22 @@ export default function HomePage({ onNavigate, onModuleChange }: HomePageProps) 
       {/* Projects Grid */}
       <div className="px-6 -mt-6">
         <div className="grid grid-cols-2 gap-4">
-          {projects.map((project) => (
-            <ProjectCard
-              key={project.id}
-              {...project}
-              onNavigate={onNavigate}
-            />
-          ))}
+          {isLoading ? (
+            <>
+              <ProjectCardSkeleton />
+              <ProjectCardSkeleton />
+              <ProjectCardSkeleton />
+              <ProjectCardSkeleton />
+            </>
+          ) : (
+            projects.map((project) => (
+              <ProjectCard
+                key={project.id}
+                {...project}
+                onNavigate={onNavigate}
+              />
+            ))
+          )}
         </div>
       </div>
 
