@@ -18,11 +18,20 @@ const ProjectCard = memo(function ProjectCard({
   color,
   onNavigate
 }: ProjectCardProps) {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      onNavigate(id);
+    }
+  };
+
   return (
     <button
       onClick={() => onNavigate(id)}
-      className="bg-white rounded-2xl p-5 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 active:scale-95"
+      onKeyDown={handleKeyDown}
+      className="bg-white rounded-2xl p-5 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 active:scale-95 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
       aria-label={`Navigate to ${name}`}
+      tabIndex={0}
     >
       <div 
         className={`w-14 h-14 rounded-xl bg-gradient-to-br ${color} flex items-center justify-center mb-4 shadow-lg`}
