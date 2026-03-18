@@ -88,7 +88,7 @@ export default function HomePage({ onNavigate, onModuleChange }: HomePageProps) 
                 <ProjectCard
                   key={project.id}
                   {...project}
-                  onNavigate={onNavigate}
+                  onNavigate={handleNavigate}
                 />
               ))
             )}
