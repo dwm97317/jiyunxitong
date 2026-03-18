@@ -16,6 +16,13 @@ import Welfare from './pages/Welfare';
 import InviteSteps from './pages/InviteSteps';
 import HelpPay from './pages/HelpPay';
 import ApplyProxyPay from './pages/ApplyProxyPay';
+import MyDistribution from './pages/MyDistribution';
+import GroupLeaderCenter from './pages/GroupLeaderCenter';
+import ApplyGroupLeader from './pages/ApplyGroupLeader';
+import MyTeam from './pages/MyTeam';
+import RebateOrders from './pages/RebateOrders';
+import InitiateGroupBuy from './pages/InitiateGroupBuy';
+import StandardExpress from './pages/StandardExpress';
 
 export default function App() {
   return (
@@ -38,6 +45,13 @@ export default function App() {
           <Route path="invite-steps" element={<InviteSteps />} />
           <Route path="help-pay" element={<HelpPay />} />
           <Route path="apply-proxy-pay" element={<ApplyProxyPay />} />
+          <Route path="my-distribution" element={<MyDistribution />} />
+          <Route path="group-leader" element={<GroupLeaderCenter />} />
+          <Route path="apply-group-leader" element={<ApplyGroupLeader />} />
+          <Route path="my-team" element={<MyTeam />} />
+          <Route path="rebate-orders" element={<RebateOrders />} />
+          <Route path="initiate-group-buy" element={<InitiateGroupBuy />} />
+          <Route path="standard-express" element={<StandardExpress />} />
         </Route>
       </Routes>
     </BrowserRouter>

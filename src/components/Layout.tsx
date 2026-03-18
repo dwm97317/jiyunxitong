@@ -17,6 +17,13 @@ const screens = [
   { path: '/invite-steps', name: '三步邀请 (Invite Steps)' },
   { path: '/help-pay', name: '帮我付 (Help Pay)' },
   { path: '/apply-proxy-pay', name: '申请代付 (Apply Proxy Pay)' },
+  { path: '/my-distribution', name: '我的分销 (My Distribution)' },
+  { path: '/group-leader', name: '团长中心 (Group Leader Center)' },
+  { path: '/apply-group-leader', name: '申请团长 (Apply Group Leader)' },
+  { path: '/my-team', name: '我的团队 (My Team)' },
+  { path: '/rebate-orders', name: '返佣订单 (Rebate Orders)' },
+  { path: '/initiate-group-buy', name: '发起拼团 (Initiate Group Buy)' },
+  { path: '/standard-express', name: '标快件 (Standard Express)' },
 ];
 
 export default function Layout() {
