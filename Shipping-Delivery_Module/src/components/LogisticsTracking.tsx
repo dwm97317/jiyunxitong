@@ -1,10 +1,12 @@
 import { ChevronLeft, Truck, Package, CheckCircle2, Circle } from 'lucide-react';
+import BottomNavBar from './BottomNavBar';
 
 interface LogisticsTrackingProps {
   onBack: () => void;
+  onModuleChange?: (module: string, screen?: string) => void;
 }
 
-export default function LogisticsTracking({ onBack }: LogisticsTrackingProps) {
+export default function LogisticsTracking({ onBack, onModuleChange }: LogisticsTrackingProps) {
   return (
     <div className="flex flex-col h-full bg-gray-100 relative overflow-hidden">
       <div className="absolute inset-0 z-0">
@@ -147,6 +149,8 @@ export default function LogisticsTracking({ onBack }: LogisticsTrackingProps) {
           </div>
         </div>
       </div>
+
+      <BottomNavBar activeTab="search" onModuleChange={onModuleChange} />
     </div>
   );
 }

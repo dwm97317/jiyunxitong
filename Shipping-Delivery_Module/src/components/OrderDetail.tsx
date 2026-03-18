@@ -1,6 +1,7 @@
 import { ChevronLeft, MoreHorizontal, Circle } from 'lucide-react';
+import BottomNavBar from './BottomNavBar';
 
-export default function OrderDetail({ onBack }: { onBack: () => void }) {
+export default function OrderDetail({ onBack, onModuleChange }: { onBack: () => void; onModuleChange?: (module: string, screen?: string) => void }) {
   return (
     <div className="bg-[#F5F5F5] min-h-full pb-10 font-sans">
       {/* Header */}
@@ -123,6 +124,8 @@ export default function OrderDetail({ onBack }: { onBack: () => void }) {
 
         </div>
       </div>
+
+      <BottomNavBar activeTab="search" onModuleChange={onModuleChange} />
     </div>
   );
 }

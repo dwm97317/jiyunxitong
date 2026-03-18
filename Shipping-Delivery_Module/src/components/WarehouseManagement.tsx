@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { MoreHorizontal, Circle, Package, Send, ScanLine, MapPin, Users, Truck, Grid, Archive, Headset, X, Volume2 } from 'lucide-react';
+import BottomNavBar from './BottomNavBar';
 
 interface WarehouseManagementProps {
   onBack: () => void;
+  onModuleChange?: (module: string, screen?: string) => void;
 }
 
-export default function WarehouseManagement({ onBack }: WarehouseManagementProps) {
+export default function WarehouseManagement({ onBack, onModuleChange }: WarehouseManagementProps) {
   const [activeTab, setActiveTab] = useState(0);
   const [showNotification, setShowNotification] = useState(true);
 
@@ -240,6 +242,8 @@ export default function WarehouseManagement({ onBack }: WarehouseManagementProps
           </div>
         </div>
       )}
+
+      <BottomNavBar activeTab="search" onModuleChange={onModuleChange} />
     </div>
   );
 }

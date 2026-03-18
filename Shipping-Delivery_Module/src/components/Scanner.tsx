@@ -1,6 +1,7 @@
 import { ChevronLeft, MoreHorizontal, Circle, Image as ImageIcon, Zap } from 'lucide-react';
+import BottomNavBar from './BottomNavBar';
 
-export default function Scanner({ onBack }: { onBack: () => void }) {
+export default function Scanner({ onBack, onModuleChange }: { onBack: () => void; onModuleChange?: (module: string, screen?: string) => void }) {
   return (
     <div className="bg-[#333333] min-h-full flex flex-col text-white font-sans">
       {/* Header */}
@@ -45,6 +46,8 @@ export default function Scanner({ onBack }: { onBack: () => void }) {
           <Zap className="w-6 h-6 text-white" />
         </div>
       </div>
+
+      <BottomNavBar activeTab="search" onModuleChange={onModuleChange} />
     </div>
   );
 }

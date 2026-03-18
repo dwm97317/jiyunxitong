@@ -1,12 +1,14 @@
 import { Package, Search, Home as HomeIcon, Truck } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
 import LanguageSwitcher from './LanguageSwitcher';
+import BottomNavBar from './BottomNavBar';
 
 interface HomePageProps {
   onNavigate: (screen: string) => void;
+  onModuleChange?: (module: string, screen?: string) => void;
 }
 
-export default function HomePage({ onNavigate }: HomePageProps) {
+export default function HomePage({ onNavigate, onModuleChange }: HomePageProps) {
   const { t } = useLanguage();
   
   const projects = [
@@ -112,6 +114,8 @@ export default function HomePage({ onNavigate }: HomePageProps) {
           </div>
         </div>
       </div>
+
+      <BottomNavBar activeTab="search" onModuleChange={onModuleChange} />
     </div>
   );
 }
