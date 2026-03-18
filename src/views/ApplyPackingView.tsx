@@ -5,6 +5,7 @@
 
 import React from 'react';
 import { Copy } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface ApplyPackingViewProps {
   selectedParcels: string[];
@@ -12,10 +13,12 @@ interface ApplyPackingViewProps {
 }
 
 const ApplyPackingView: React.FC<ApplyPackingViewProps> = ({ selectedParcels, onToggleParcel }) => {
+  const { t } = useTranslation();
+
   const parcels = [
-    { id: '1', tracking: 'SF1437829133905', from: '南昌市', sender: '矫亨', to: '北京市', recipient: '寇旭', time: '2022-03-17 13:39', status: '未打包' },
-    { id: '2', tracking: 'SF1437829133905', from: '南昌市', sender: '矫亨', to: '北京市', recipient: '寇旭', time: '2022-03-17 13:39', status: '未打包' },
-    { id: '3', tracking: 'SF1437829133905', from: '南昌市', sender: '矫亨', to: '北京市', recipient: '寇旭', time: '2022-03-17 13:39', status: '未打包' },
+    { id: '1', tracking: 'SF1437829133905', from: 'Nanchang', sender: 'Jiao Heng', to: 'Beijing', recipient: 'Kou Xu', time: '2022-03-17 13:39', status: t('applyPacking.unpackaged') },
+    { id: '2', tracking: 'SF1437829133905', from: 'Nanchang', sender: 'Jiao Heng', to: 'Beijing', recipient: 'Kou Xu', time: '2022-03-17 13:39', status: t('applyPacking.unpackaged') },
+    { id: '3', tracking: 'SF1437829133905', from: 'Nanchang', sender: 'Jiao Heng', to: 'Beijing', recipient: 'Kou Xu', time: '2022-03-17 13:39', status: t('applyPacking.unpackaged') },
   ];
 
   return (
@@ -24,19 +27,18 @@ const ApplyPackingView: React.FC<ApplyPackingViewProps> = ({ selectedParcels, on
         <section key={parcel.id} className="bg-white rounded-2xl p-4 shadow-sm space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <button 
+              <button
                 onClick={() => onToggleParcel(parcel.id)}
-                className={`w-5 h-5 rounded-full border flex items-center justify-center transition-colors ${
-                  selectedParcels.includes(parcel.id) ? 'bg-[#4A90E2] border-[#4A90E2]' : 'border-gray-300'
-                }`}
+                className={`w-5 h-5 rounded-full border flex items-center justify-center transition-colors ${selectedParcels.includes(parcel.id) ? 'bg-[#4A90E2] border-[#4A90E2]' : 'border-gray-300'
+                  }`}
               >
                 {selectedParcels.includes(parcel.id) && <div className="w-2 h-2 bg-white rounded-full" />}
               </button>
-              <span className="text-xs text-gray-400">运单号：{parcel.tracking}</span>
+              <span className="text-xs text-gray-400">{t('plaza.orderNo')}：{parcel.tracking}</span>
               <Copy className="w-3 h-3 text-gray-400 cursor-pointer" />
             </div>
             <div className="w-8 h-8 bg-[#FFF5EB] rounded-full flex items-center justify-center border border-[#FFE0C2]">
-              <span className="text-[8px] text-[#FF9533] leading-tight text-center">个人<br/>件</span>
+              <span className="text-[8px] text-[#FF9533] leading-tight text-center">Ind.<br />item</span>
             </div>
           </div>
 
@@ -61,12 +63,12 @@ const ApplyPackingView: React.FC<ApplyPackingViewProps> = ({ selectedParcels, on
             <div className="w-4 h-4 bg-[#4A90E2] rounded-full flex items-center justify-center">
               <div className="w-1.5 h-1.5 bg-white rounded-full" />
             </div>
-            <span className="text-xs text-gray-500">签收时间：{parcel.time}</span>
+            <span className="text-xs text-gray-500">{t('applyPacking.receivedTime')}：{parcel.time}</span>
           </div>
 
           <div className="flex justify-end">
             <button className="bg-[#4A90E2] text-white text-xs font-medium px-4 py-2 rounded-full">
-              查看详情
+              {t('logistics.details')}
             </button>
           </div>
         </section>

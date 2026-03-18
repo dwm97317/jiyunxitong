@@ -4,16 +4,19 @@
  */
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const ClaimDetailsView: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="bg-white rounded-2xl p-6 shadow-sm space-y-6">
       {/* Claim Reason */}
       <div className="space-y-3">
-        <h3 className="text-sm font-bold">理赔原因</h3>
+        <h3 className="text-sm font-bold">{t('claimDetails.reason')}</h3>
         <div className="relative">
-          <textarea 
-            placeholder="请输入理赔原因" 
+          <textarea
+            placeholder={t('claimDetails.reasonPlaceholder')}
             className="w-full bg-[#F5F5F5] rounded-xl p-4 text-sm min-h-[120px] outline-none resize-none"
             maxLength={100}
           />
@@ -23,7 +26,7 @@ const ClaimDetailsView: React.FC = () => {
 
       {/* Value Evidence */}
       <div className="space-y-3">
-        <h3 className="text-sm font-bold">价值凭证</h3>
+        <h3 className="text-sm font-bold">{t('claimDetails.evidence')}</h3>
         <div className="w-24 h-24 bg-[#F5F5F5] rounded-xl flex items-center justify-center cursor-pointer">
           <div className="text-gray-400">
             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -35,10 +38,10 @@ const ClaimDetailsView: React.FC = () => {
 
       {/* Claim Amount */}
       <div className="flex items-center justify-between py-4 border-b border-gray-50">
-        <h3 className="text-sm font-bold">理赔金额</h3>
-        <input 
-          type="text" 
-          placeholder="请输入理赔金额" 
+        <h3 className="text-sm font-bold">{t('claimDetails.amount')}</h3>
+        <input
+          type="text"
+          placeholder={t('claimDetails.amountPlaceholder')}
           className="text-right text-sm outline-none placeholder:text-gray-300"
         />
       </div>
@@ -46,15 +49,15 @@ const ClaimDetailsView: React.FC = () => {
       {/* Loss Code Proof */}
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <h3 className="text-sm font-bold">丢失编码证明</h3>
-          <input 
-            type="text" 
-            placeholder="请输入" 
+          <h3 className="text-sm font-bold">{t('claimDetails.lossProof')}</h3>
+          <input
+            type="text"
+            placeholder={t('claimDetails.lossProofPlaceholder')}
             className="text-right text-sm outline-none placeholder:text-gray-300"
           />
         </div>
         <p className="text-[11px] text-gray-400 leading-relaxed">
-          快件在美国境内段派送丢失，需联系当地派送公司取得申诉编码，方可申请理赔（保价快件除外）
+          {t('claimDetails.lossHint')}
         </p>
       </div>
     </div>

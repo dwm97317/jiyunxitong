@@ -6,6 +6,7 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, ChevronRight } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface PackingModalProps {
   isOpen: boolean;
@@ -15,13 +16,15 @@ interface PackingModalProps {
   onSubmit: () => void;
 }
 
-const PackingModal: React.FC<PackingModalProps> = ({ 
-  isOpen, 
-  onClose, 
-  shippingMethod, 
-  setShippingMethod, 
-  onSubmit 
+const PackingModal: React.FC<PackingModalProps> = ({
+  isOpen,
+  onClose,
+  shippingMethod,
+  setShippingMethod,
+  onSubmit
 }) => {
+  const { t } = useTranslation();
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -41,7 +44,7 @@ const PackingModal: React.FC<PackingModalProps> = ({
             className="fixed bottom-0 left-0 right-0 bg-white rounded-t-[32px] z-50 px-6 pt-8 pb-10"
           >
             <div className="flex items-center justify-between mb-8">
-              <h2 className="text-xl font-bold">填写打包信息</h2>
+              <h2 className="text-xl font-bold">{t('packing.title')}</h2>
               <button onClick={onClose} className="p-1">
                 <X className="w-6 h-6 text-gray-400" />
               </button>
@@ -50,41 +53,41 @@ const PackingModal: React.FC<PackingModalProps> = ({
             <div className="space-y-8">
               {/* VAS */}
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-500">增值服务</span>
+                <span className="text-sm text-gray-500">{t('packing.vas')}</span>
                 <div className="flex items-center gap-1 text-sm">
-                  <span className="text-gray-800">退货服务 标准加固...</span>
+                  <span className="text-gray-800">{t('vas.consolidation.title')}...</span>
                   <ChevronRight className="w-4 h-4 text-gray-400" />
                 </div>
               </div>
 
               {/* Shipping Method */}
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-500">运送方式</span>
+                <span className="text-sm text-gray-500">{t('packing.method')}</span>
                 <div className="flex items-center gap-6">
-                  <button 
+                  <button
                     onClick={() => setShippingMethod('sea')}
                     className="flex items-center gap-2"
                   >
                     <div className={`w-5 h-5 rounded-full border flex items-center justify-center ${shippingMethod === 'sea' ? 'border-[#4A90E2] bg-[#4A90E2]' : 'border-gray-300'}`}>
                       {shippingMethod === 'sea' && <div className="w-2 h-2 bg-white rounded-full" />}
                     </div>
-                    <span className="text-sm text-gray-500">海运</span>
+                    <span className="text-sm text-gray-500">{t('common.sea')}</span>
                   </button>
-                  <button 
+                  <button
                     onClick={() => setShippingMethod('air')}
                     className="flex items-center gap-2"
                   >
                     <div className={`w-5 h-5 rounded-full border flex items-center justify-center ${shippingMethod === 'air' ? 'border-[#4A90E2] bg-[#4A90E2]' : 'border-gray-300'}`}>
                       {shippingMethod === 'air' && <div className="w-2 h-2 bg-white rounded-full" />}
                     </div>
-                    <span className="text-sm text-gray-500">空运</span>
+                    <span className="text-sm text-gray-500">{t('common.air')}</span>
                   </button>
                 </div>
               </div>
 
               {/* Available Parcels */}
               <div className="space-y-4">
-                <h3 className="text-sm text-gray-500">可用包裹</h3>
+                <h3 className="text-sm text-gray-500">{t('packing.available')}</h3>
                 <div className="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1 no-scrollbar">
                   {[
                     'https://picsum.photos/seed/shoes1/300/300',
@@ -105,7 +108,7 @@ const PackingModal: React.FC<PackingModalProps> = ({
                 onClick={onSubmit}
                 className="w-full bg-[#4A90E2] text-white font-bold py-4 rounded-full shadow-lg shadow-blue-100 mt-4"
               >
-                提交打包
+                {t('packing.submit')}
               </motion.button>
             </div>
           </motion.div>

@@ -59,18 +59,24 @@ export interface PlazaItem {
   isOfficial?: boolean;
 }
 
-export type ViewType = 
-  | 'details' 
-  | 'empty' 
-  | 'rules' 
-  | 'claim' 
-  | 'predeclare' 
-  | 'claims' 
-  | 'vas' 
-  | 'claimDetails' 
-  | 'claimTracking' 
-  | 'claimRules' 
-  | 'claimTerms' 
-  | 'applyPacking' 
-  | 'plaza' 
-  | 'plazaDetails';
+export type ViewType =
+  | 'home'
+  | 'details'
+  | 'empty'
+  | 'rules'
+  | 'claim'
+  | 'predeclare'
+  | 'claims'
+  | 'vas'
+  | 'claimDetails'
+  | 'claimTracking'
+  | 'claimRules'
+  | 'claimTerms'
+  | 'applyPacking'
+  | 'plaza'
+  | 'plazaDetails'
+  | 'parcelManagement'
+  | 'insuranceRules'
+  | 'claimRulesDetail'
+  | 'paymentSuccess'
+  | 'claimSuccess';
