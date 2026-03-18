@@ -5,6 +5,7 @@ import LanguageSwitcher from './LanguageSwitcher';
 import BottomNavBar from './BottomNavBar';
 import ProjectCard from './ProjectCard';
 import ProjectCardSkeleton from './ProjectCardSkeleton';
+import ErrorBoundary from './ErrorBoundary';
 
 interface HomePageProps {
   onNavigate: (screen: string) => void;
@@ -69,24 +70,26 @@ export default function HomePage({ onNavigate, onModuleChange }: HomePageProps) 
 
       {/* Projects Grid */}
       <div className="px-6 -mt-6">
-        <div className="grid grid-cols-2 gap-4">
-          {isLoading ? (
-            <>
-              <ProjectCardSkeleton />
-              <ProjectCardSkeleton />
-              <ProjectCardSkeleton />
-              <ProjectCardSkeleton />
-            </>
-          ) : (
-            projects.map((project) => (
-              <ProjectCard
-                key={project.id}
-                {...project}
-                onNavigate={onNavigate}
-              />
-            ))
-          )}
-        </div>
+        <ErrorBoundary>
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {isLoading ? (
+              <>
+                <ProjectCardSkeleton />
+                <ProjectCardSkeleton />
+                <ProjectCardSkeleton />
+                <ProjectCardSkeleton />
+              </>
+            ) : (
+              projects.map((project) => (
+                <ProjectCard
+                  key={project.id}
+                  {...project}
+                  onNavigate={onNavigate}
+                />
+              ))
+            )}
+          </div>
+        </ErrorBoundary>
       </div>
 
       {/* Quick Stats */}
