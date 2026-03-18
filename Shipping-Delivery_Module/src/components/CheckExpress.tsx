@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { ChevronLeft, ScanLine, Search, Copy, MapPin, Truck } from 'lucide-react';
+import BottomNavBar from './BottomNavBar';
 
 interface CheckExpressProps {
   onBack: () => void;
   onNavigate: (screen: string) => void;
+  onModuleChange?: (module: string, screen?: string) => void;
 }
 
-export default function CheckExpress({ onBack, onNavigate }: CheckExpressProps) {
+export default function CheckExpress({ onBack, onNavigate, onModuleChange }: CheckExpressProps) {
   const [searchQuery, setSearchQuery] = useState('SF1437829133905');
   const [activeTab, setActiveTab] = useState('全部');
 
@@ -212,6 +214,8 @@ export default function CheckExpress({ onBack, onNavigate }: CheckExpressProps) 
           </div>
         </div>
       )}
+
+      <BottomNavBar activeTab="search" onModuleChange={onModuleChange} />
     </div>
   );
 }

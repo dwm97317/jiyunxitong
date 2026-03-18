@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { ChevronLeft, MoreHorizontal, Circle, Search, Scan, Copy, MapPin, Truck } from 'lucide-react';
+import BottomNavBar from './BottomNavBar';
 
-export default function PackageList({ onNavigate }: { onNavigate: (screen: string) => void }) {
+export default function PackageList({ onNavigate, onModuleChange }: { onNavigate: (screen: string) => void; onModuleChange?: (module: string, screen?: string) => void }) {
   const [activeTab, setActiveTab] = useState('全部');
   const tabs = ['全部', '未入库', '已入库', '未打包', '未付款', '未发货', '已发货'];
 
@@ -191,6 +192,8 @@ export default function PackageList({ onNavigate }: { onNavigate: (screen: strin
           <span>申请打包</span>
         </div>
       </div>
+
+      <BottomNavBar activeTab="search" onModuleChange={onModuleChange} />
     </div>
   );
 }

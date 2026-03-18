@@ -31,10 +31,36 @@ import ClaimsView from './components/ClaimsView';
 import ClaimDetailsView from './components/ClaimDetailsView';
 import ParcelClaimView from './components/ParcelClaimView';
 
-type ModuleType = 'shipping' | 'homepage' | 'consolidated';
+// User Center Module Components
+import Home from './components/Home';
+import Wallet from './components/Wallet';
+import AddressBook from './components/AddressBook';
+import Auth from './components/Auth';
+import BindEmail from './components/BindEmail';
+import Settings from './components/Settings';
+import Invite from './components/Invite';
+import InviteRecord from './components/InviteRecord';
+import CommissionDetails from './components/CommissionDetails';
+import CustomerService from './components/CustomerService';
+import Messages from './components/Messages';
+import Feedback from './components/Feedback';
+import Welfare from './components/Welfare';
+import InviteSteps from './components/InviteSteps';
+import HelpPay from './components/HelpPay';
+import ApplyProxyPay from './components/ApplyProxyPay';
+import MyDistribution from './components/MyDistribution';
+import GroupLeaderCenter from './components/GroupLeaderCenter';
+import ApplyGroupLeader from './components/ApplyGroupLeader';
+import MyTeam from './components/MyTeam';
+import RebateOrders from './components/RebateOrders';
+import InitiateGroupBuy from './components/InitiateGroupBuy';
+import StandardExpress from './components/StandardExpress';
+
+type ModuleType = 'shipping' | 'homepage' | 'consolidated' | 'usercenter';
 type ShippingPhase = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 type HomepageScreen = 'home' | 'orderDetail' | 'packageList' | 'scanner' | 'checkExpress' | 'logistics' | 'warehouse';
 type ConsolidatedScreen = 'details' | 'plaza' | 'plazaDetails' | 'applyPacking' | 'claim' | 'predeclare' | 'vas' | 'claims' | 'claimDetails' | 'claimTracking';
+type UserCenterScreen = 'home' | 'wallet' | 'address' | 'auth' | 'email' | 'settings' | 'invite' | 'inviteRecord' | 'commission' | 'customerService' | 'messages' | 'feedback' | 'welfare' | 'inviteSteps' | 'helpPay' | 'applyProxyPay' | 'myDistribution' | 'groupLeader' | 'applyGroupLeader' | 'myTeam' | 'rebateOrders' | 'initiateGroupBuy' | 'standardExpress';
 
 interface MenuItem {
   id: string;
@@ -42,7 +68,7 @@ interface MenuItem {
   name: string;
   desc: string;
   phase?: ShippingPhase;
-  screen?: HomepageScreen | ConsolidatedScreen;
+  screen?: HomepageScreen | ConsolidatedScreen | UserCenterScreen;
 }
 
 const App: React.FC = () => {
@@ -50,6 +76,7 @@ const App: React.FC = () => {
   const [activePhase, setActivePhase] = useState<ShippingPhase>(1);
   const [currentScreen, setCurrentScreen] = useState<HomepageScreen>('home');
   const [consolidatedScreen, setConsolidatedScreen] = useState<ConsolidatedScreen>('details');
+  const [userCenterScreen, setUserCenterScreen] = useState<UserCenterScreen>('home');
 
   // 统一菜单项 / Menu items thống nhất
   const menuItems: MenuItem[] = [
@@ -75,6 +102,18 @@ const App: React.FC = () => {
     { id: 'predeclare', module: 'consolidated', screen: 'predeclare', name: '包裹预报 / Báo trước gói', desc: '预报包裹信息 / Báo trước thông tin' },
     { id: 'vas', module: 'consolidated', screen: 'vas', name: '增值服务 / Dịch vụ VAS', desc: '额外服务选项 / Tùy chọn dịch vụ thêm' },
     { id: 'claims', module: 'consolidated', screen: 'claims', name: '在线理赔 / Bồi thường online', desc: '理赔申请 / Đăng ký bồi thường' },
+    
+    // User Center Module
+    { id: 'userHome', module: 'usercenter', screen: 'home', name: '我的中心 / Trung tâm của tôi', desc: '个人主页 / Trang cá nhân' },
+    { id: 'wallet', module: 'usercenter', screen: 'wallet', name: '我的钱包 / Ví của tôi', desc: '余额、充值 / Số dư, nạp tiền' },
+    { id: 'address', module: 'usercenter', screen: 'address', name: '地址簿 / Sổ địa chỉ', desc: '管理收货地址 / Quản lý địa chỉ' },
+    { id: 'auth', module: 'usercenter', screen: 'auth', name: '实名认证 / Xác thực danh tính', desc: '身份验证 / Xác minh danh tính' },
+    { id: 'settings', module: 'usercenter', screen: 'settings', name: '偏好设置 / Cài đặt', desc: '系统设置 / Cài đặt hệ thống' },
+    { id: 'invite', module: 'usercenter', screen: 'invite', name: '邀请好友 / Mời bạn bè', desc: '邀请奖励 / Phần thưởng giới thiệu' },
+    { id: 'myDistribution', module: 'usercenter', screen: 'myDistribution', name: '我的分销 / Phân phối của tôi', desc: '分销管理 / Quản lý phân phối' },
+    { id: 'groupLeader', module: 'usercenter', screen: 'groupLeader', name: '团长中心 / Trung tâm trưởng nhóm', desc: '团购管理 / Quản lý mua nhóm' },
+    { id: 'customerService', module: 'usercenter', screen: 'customerService', name: '客服 / Dịch vụ khách hàng', desc: '在线客服 / Hỗ trợ trực tuyến' },
+    { id: 'feedback', module: 'usercenter', screen: 'feedback', name: '功能反馈 / Phản hồi', desc: '意见建议 / Ý kiến đóng góp' },
   ];
 
   const handleMenuClick = (item: MenuItem) => {
@@ -89,6 +128,8 @@ const App: React.FC = () => {
         setCurrentScreen(item.screen as HomepageScreen);
       } else if (item.module === 'consolidated') {
         setConsolidatedScreen(item.screen as ConsolidatedScreen);
+      } else if (item.module === 'usercenter') {
+        setUserCenterScreen(item.screen as UserCenterScreen);
       }
     }
   };
@@ -101,6 +142,31 @@ const App: React.FC = () => {
   // Consolidated 模块的导航处理 / Xử lý điều hướng module Consolidated
   const handleConsolidatedNavigate = (screen: string) => {
     setConsolidatedScreen(screen as ConsolidatedScreen);
+  };
+
+  // User Center 模块的导航处理 / Xử lý điều hướng module User Center
+  const handleUserCenterNavigate = (screen: string) => {
+    setUserCenterScreen(screen as UserCenterScreen);
+  };
+
+  // 跨模块导航处理 / Xử lý điều hướng xuyên module
+  const handleModuleChange = (module: string, screen?: string) => {
+    if (module === 'shipping') {
+      setActiveModule('shipping');
+      if (screen === 'phase4') {
+        setActivePhase(4);
+      }
+    } else if (module === 'homepage') {
+      setActiveModule('homepage');
+      if (screen === 'checkExpress') {
+        setCurrentScreen('checkExpress');
+      }
+    } else if (module === 'usercenter') {
+      setActiveModule('usercenter');
+      if (screen) {
+        setUserCenterScreen(screen as UserCenterScreen);
+      }
+    }
   };
 
   return (
@@ -119,7 +185,8 @@ const App: React.FC = () => {
               const isActive = activeModule === item.module && 
                 (item.phase ? activePhase === item.phase : 
                  item.module === 'homepage' ? item.screen === currentScreen :
-                 item.module === 'consolidated' ? item.screen === consolidatedScreen : false);
+                 item.module === 'consolidated' ? item.screen === consolidatedScreen :
+                 item.module === 'usercenter' ? item.screen === userCenterScreen : false);
               
               return (
                 <button
@@ -186,13 +253,13 @@ const App: React.FC = () => {
                 </div>
 
                 <div className={`h-full w-full ${['checkExpress', 'warehouse', 'logistics'].includes(currentScreen) ? '' : 'pt-11'} overflow-y-auto overflow-x-hidden relative hide-scrollbar`}>
-                  {currentScreen === 'home' && <HomePage onNavigate={handleHomepageNavigate} />}
-                  {currentScreen === 'orderDetail' && <OrderDetail onBack={() => setCurrentScreen('packageList')} />}
-                  {currentScreen === 'packageList' && <PackageList onNavigate={handleHomepageNavigate} />}
-                  {currentScreen === 'scanner' && <Scanner onBack={() => setCurrentScreen('packageList')} />}
-                  {currentScreen === 'checkExpress' && <CheckExpress onBack={() => setCurrentScreen('home')} onNavigate={handleHomepageNavigate} />}
-                  {currentScreen === 'warehouse' && <WarehouseManagement onBack={() => setCurrentScreen('home')} />}
-                  {currentScreen === 'logistics' && <LogisticsTracking onBack={() => setCurrentScreen('checkExpress')} />}
+                  {currentScreen === 'home' && <HomePage onNavigate={handleHomepageNavigate} onModuleChange={handleModuleChange} />}
+                  {currentScreen === 'orderDetail' && <OrderDetail onBack={() => setCurrentScreen('packageList')} onModuleChange={handleModuleChange} />}
+                  {currentScreen === 'packageList' && <PackageList onNavigate={handleHomepageNavigate} onModuleChange={handleModuleChange} />}
+                  {currentScreen === 'scanner' && <Scanner onBack={() => setCurrentScreen('packageList')} onModuleChange={handleModuleChange} />}
+                  {currentScreen === 'checkExpress' && <CheckExpress onBack={() => setCurrentScreen('home')} onNavigate={handleHomepageNavigate} onModuleChange={handleModuleChange} />}
+                  {currentScreen === 'warehouse' && <WarehouseManagement onBack={() => setCurrentScreen('home')} onModuleChange={handleModuleChange} />}
+                  {currentScreen === 'logistics' && <LogisticsTracking onBack={() => setCurrentScreen('checkExpress')} onModuleChange={handleModuleChange} />}
                 </div>
 
                 {/* Home Indicator Mock */}
@@ -239,6 +306,65 @@ const App: React.FC = () => {
                   {consolidatedScreen === 'claims' && <ClaimsView activeTab="available" setActiveTab={() => {}} setView={handleConsolidatedNavigate} setSelectedClaimId={() => {}} />}
                   {consolidatedScreen === 'claimDetails' && <ClaimDetailsView />}
                   {consolidatedScreen === 'claimTracking' && <ClaimTrackingView claim={{} as any} />}
+                </div>
+
+                {/* Home Indicator Mock */}
+                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-[120px] h-1.5 rounded-full z-50 bg-black"></div>
+              </div>
+            </div>
+          )}
+
+          {/* User Center Module */}
+          {activeModule === 'usercenter' && (
+            <div className="flex items-center justify-center min-h-screen py-8">
+              <div className="w-full max-w-[375px] h-[812px] bg-white rounded-[40px] shadow-2xl overflow-hidden relative border-[8px] border-gray-900">
+                {/* Status Bar Mock */}
+                <div className="h-11 w-full flex justify-between items-center px-6 absolute top-0 left-0 z-50 text-black">
+                  <span className="text-[14px] font-medium">9:41</span>
+                  <div className="flex items-center gap-1.5">
+                    {/* Signal */}
+                    <div className="flex items-end gap-[2px] h-3">
+                      <div className="w-[3px] h-1.5 rounded-sm bg-black"></div>
+                      <div className="w-[3px] h-2 rounded-sm bg-black"></div>
+                      <div className="w-[3px] h-2.5 rounded-sm bg-black"></div>
+                      <div className="w-[3px] h-3 rounded-sm bg-black"></div>
+                    </div>
+                    {/* Wifi */}
+                    <svg className="w-4 h-4 text-black" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 21C13.1046 21 14 20.1046 14 19C14 17.8954 13.1046 17 12 17C10.8954 17 10 17.8954 10 19C10 20.1046 10.8954 21 12 21Z" />
+                    </svg>
+                    {/* Battery */}
+                    <div className="w-6 h-3 rounded-[4px] border border-opacity-30 border-black relative flex items-center p-[1px]">
+                      <div className="h-full w-[80%] rounded-[2px] bg-black"></div>
+                      <div className="absolute right-[-3px] top-1/2 -translate-y-1/2 w-[2px] h-1 bg-black rounded-r-sm opacity-30"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="h-full w-full pt-11 overflow-y-auto overflow-x-hidden relative hide-scrollbar">
+                  {userCenterScreen === 'home' && <Home onNavigate={handleUserCenterNavigate} onModuleChange={handleModuleChange} />}
+                  {userCenterScreen === 'wallet' && <Wallet onBack={() => setUserCenterScreen('home')} onNavigate={handleUserCenterNavigate} onModuleChange={handleModuleChange} />}
+                  {userCenterScreen === 'address' && <AddressBook onBack={() => setUserCenterScreen('home')} onNavigate={handleUserCenterNavigate} onModuleChange={handleModuleChange} />}
+                  {userCenterScreen === 'auth' && <Auth onBack={() => setUserCenterScreen('home')} onNavigate={handleUserCenterNavigate} onModuleChange={handleModuleChange} />}
+                  {userCenterScreen === 'email' && <BindEmail onBack={() => setUserCenterScreen('home')} onNavigate={handleUserCenterNavigate} onModuleChange={handleModuleChange} />}
+                  {userCenterScreen === 'settings' && <Settings onBack={() => setUserCenterScreen('home')} onNavigate={handleUserCenterNavigate} onModuleChange={handleModuleChange} />}
+                  {userCenterScreen === 'invite' && <Invite onBack={() => setUserCenterScreen('home')} onNavigate={handleUserCenterNavigate} onModuleChange={handleModuleChange} />}
+                  {userCenterScreen === 'inviteRecord' && <InviteRecord onBack={() => setUserCenterScreen('home')} onNavigate={handleUserCenterNavigate} onModuleChange={handleModuleChange} />}
+                  {userCenterScreen === 'commission' && <CommissionDetails onBack={() => setUserCenterScreen('home')} onNavigate={handleUserCenterNavigate} onModuleChange={handleModuleChange} />}
+                  {userCenterScreen === 'customerService' && <CustomerService onBack={() => setUserCenterScreen('home')} onNavigate={handleUserCenterNavigate} onModuleChange={handleModuleChange} />}
+                  {userCenterScreen === 'messages' && <Messages onBack={() => setUserCenterScreen('home')} onNavigate={handleUserCenterNavigate} onModuleChange={handleModuleChange} />}
+                  {userCenterScreen === 'feedback' && <Feedback onBack={() => setUserCenterScreen('home')} onNavigate={handleUserCenterNavigate} onModuleChange={handleModuleChange} />}
+                  {userCenterScreen === 'welfare' && <Welfare onBack={() => setUserCenterScreen('home')} onNavigate={handleUserCenterNavigate} onModuleChange={handleModuleChange} />}
+                  {userCenterScreen === 'inviteSteps' && <InviteSteps onBack={() => setUserCenterScreen('home')} onNavigate={handleUserCenterNavigate} onModuleChange={handleModuleChange} />}
+                  {userCenterScreen === 'helpPay' && <HelpPay onBack={() => setUserCenterScreen('home')} onNavigate={handleUserCenterNavigate} onModuleChange={handleModuleChange} />}
+                  {userCenterScreen === 'applyProxyPay' && <ApplyProxyPay onBack={() => setUserCenterScreen('home')} onNavigate={handleUserCenterNavigate} onModuleChange={handleModuleChange} />}
+                  {userCenterScreen === 'myDistribution' && <MyDistribution onBack={() => setUserCenterScreen('home')} onNavigate={handleUserCenterNavigate} onModuleChange={handleModuleChange} />}
+                  {userCenterScreen === 'groupLeader' && <GroupLeaderCenter onBack={() => setUserCenterScreen('home')} onNavigate={handleUserCenterNavigate} onModuleChange={handleModuleChange} />}
+                  {userCenterScreen === 'applyGroupLeader' && <ApplyGroupLeader onBack={() => setUserCenterScreen('home')} onNavigate={handleUserCenterNavigate} onModuleChange={handleModuleChange} />}
+                  {userCenterScreen === 'myTeam' && <MyTeam onBack={() => setUserCenterScreen('home')} onNavigate={handleUserCenterNavigate} onModuleChange={handleModuleChange} />}
+                  {userCenterScreen === 'rebateOrders' && <RebateOrders onBack={() => setUserCenterScreen('home')} onNavigate={handleUserCenterNavigate} onModuleChange={handleModuleChange} />}
+                  {userCenterScreen === 'initiateGroupBuy' && <InitiateGroupBuy onBack={() => setUserCenterScreen('home')} onNavigate={handleUserCenterNavigate} onModuleChange={handleModuleChange} />}
+                  {userCenterScreen === 'standardExpress' && <StandardExpress onBack={() => setUserCenterScreen('home')} onNavigate={handleUserCenterNavigate} onModuleChange={handleModuleChange} />}
                 </div>
 
                 {/* Home Indicator Mock */}
