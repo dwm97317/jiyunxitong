@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { Package, Search, Home as HomeIcon, Truck } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
 import LanguageSwitcher from './LanguageSwitcher';
@@ -21,6 +21,10 @@ export default function HomePage({ onNavigate, onModuleChange }: HomePageProps) 
     const timer = setTimeout(() => setIsLoading(false), 800);
     return () => clearTimeout(timer);
   }, []);
+
+  const handleNavigate = useCallback((screen: string) => {
+    onNavigate(screen);
+  }, [onNavigate]);
 
   const projects = useMemo(() => [
     {
