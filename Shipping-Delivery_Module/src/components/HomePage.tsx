@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Package, Search, Home as HomeIcon, Truck } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
 import LanguageSwitcher from './LanguageSwitcher';
@@ -21,7 +21,7 @@ export default function HomePage({ onNavigate, onModuleChange }: HomePageProps) 
     return () => clearTimeout(timer);
   }, []);
 
-  const projects = [
+  const projects = useMemo(() => [
     {
       id: 'packageList',
       name: t.packageManagement,
@@ -54,7 +54,7 @@ export default function HomePage({ onNavigate, onModuleChange }: HomePageProps) 
       color: 'from-orange-500 to-orange-600',
       path: '/hjgghjghjhjg'
     }
-  ];
+  ], [t]);
 
   return (
     <div className="min-h-full bg-gradient-to-br from-indigo-50 via-white to-purple-50">
