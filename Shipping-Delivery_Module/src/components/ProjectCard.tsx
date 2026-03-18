@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { LucideIcon } from 'lucide-react';
 
 interface ProjectCardProps {
@@ -9,7 +10,7 @@ interface ProjectCardProps {
   onNavigate: (id: string) => void;
 }
 
-export default function ProjectCard({
+const ProjectCard = memo(function ProjectCard({
   id,
   name,
   description,
@@ -37,4 +38,6 @@ export default function ProjectCard({
       </p>
     </button>
   );
-}
+});
+
+export default ProjectCard;

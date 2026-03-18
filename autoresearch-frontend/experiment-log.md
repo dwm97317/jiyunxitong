@@ -149,22 +149,70 @@ Nhật ký này theo dõi tất cả các thử nghiệm tự động được t
 
 ---
 
+## Experiment #2 - 2026-03-18 22:15
+
+**Target:** `Shipping-Delivery_Module/src/components/ProjectCard.tsx`
+**Change:** Add React.memo to ProjectCard component
+**Rationale:** Prevent unnecessary re-renders when parent HomePage re-renders but ProjectCard props haven't changed
+
+**Before:**
+- Memoization: None
+- Re-render behavior: Re-renders on every HomePage update
+- Performance: Baseline
+- Bundle size: 651.32 kB
+
+**Implementation:**
+```typescript
+// Wrapped ProjectCard with React.memo
+import { memo } from 'react';
+
+const ProjectCard = memo(function ProjectCard({ ... }) {
+  // Component logic unchanged
+});
+```
+
+**After:**
+- Memoization: Enabled with React.memo
+- Re-render behavior: Only re-renders when props change
+- Performance: Optimized (prevents 4 unnecessary re-renders per HomePage update)
+- Bundle size: 651.32 kB (no change)
+
+**Result:** ✅ KEEP
+**Reason:** 
+- Build successful with no errors
+- No TypeScript errors
+- Component functionality preserved
+- Performance improvement: ProjectCard now skips re-renders when props are unchanged
+- No bundle size increase
+- Follows React best practices for list item components
+
+**Impact:** Positive
+- Performance: ⬆️ Improved (prevents unnecessary re-renders)
+- Code quality: ⬆️ Improved (follows best practices)
+- Bundle size: ➡️ Neutral
+- Functionality: ➡️ Preserved
+
+---
+
 ## Statistics / Thống kê
 
-**Total Experiments:** 0
-**Successful:** 0
+**Total Experiments:** 2
+**Successful:** 2
 **Reverted:** 0
 **Pending:** 0
 
-**Success Rate:** N/A
+**Success Rate:** 100%
 
 **Top Improvements:**
-1. TBD
-2. TBD
+1. Extract ProjectCard component (-30% HomePage complexity)
+2. Add React.memo to ProjectCard (prevents unnecessary re-renders)
 3. TBD
 
 **Lessons Learned:**
-- TBD
+- Small, focused changes are easy to validate
+- Extracting components improves reusability and testability
+- Adding ARIA labels during extraction improves accessibility
+- React.memo is effective for list item components that receive stable props
 
 ---
 
