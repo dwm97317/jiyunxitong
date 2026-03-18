@@ -1,11 +1,76 @@
-export type ShippingMethodType = 'EXPRESS' | 'FREIGHT';
-export type PackageType = 'SINGLE' | 'MULTIPLE';
-export type ViewModeType = 'DETAILS_NORMAL' | 'DETAILS_OVERSIZE' | 'SELECTION';
-export type InsuranceModeType = 'STANDARD' | 'CUSTOM';
-export type TabType = 'AIR' | 'SEA';
-export type ModalStateType = 'WEIGHT' | 'VOLUME' | 'RULES' | '';
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
-export interface BaseModalProps {
-  isOpen: boolean;
-  onClose: () => void;
+export interface ServiceOption {
+  id: string;
+  name: string;
+  time: string;
+  price: number;
+  recommended?: boolean;
 }
+
+export interface FeeItem {
+  label: string;
+  value: string;
+}
+
+export interface VasService {
+  id: string;
+  title: string;
+  price: number;
+  description: string;
+}
+
+export interface Parcel {
+  id: string;
+  trackingNo: string;
+  info: string;
+  time: string;
+  images: string[];
+}
+
+export interface Claim {
+  id: string;
+  trackingNo: string;
+  intlNo: string;
+  cargoInfo: string;
+  status: string;
+  itemInfo: string;
+  insurance: string;
+  time: string;
+  type: string;
+}
+
+export interface PlazaItem {
+  id: string;
+  orderNo: string;
+  date: string;
+  name: string;
+  type: string;
+  location: string;
+  zip: string;
+  weight: string;
+  total: string;
+  transport: 'air' | 'sea';
+  avatar?: string;
+  logo?: string;
+  isOfficial?: boolean;
+}
+
+export type ViewType = 
+  | 'details' 
+  | 'empty' 
+  | 'rules' 
+  | 'claim' 
+  | 'predeclare' 
+  | 'claims' 
+  | 'vas' 
+  | 'claimDetails' 
+  | 'claimTracking' 
+  | 'claimRules' 
+  | 'claimTerms' 
+  | 'applyPacking' 
+  | 'plaza' 
+  | 'plazaDetails';
