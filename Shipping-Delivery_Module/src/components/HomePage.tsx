@@ -2,6 +2,7 @@ import { Package, Search, Home as HomeIcon, Truck } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
 import LanguageSwitcher from './LanguageSwitcher';
 import BottomNavBar from './BottomNavBar';
+import ProjectCard from './ProjectCard';
 
 interface HomePageProps {
   onNavigate: (screen: string) => void;
@@ -60,22 +61,13 @@ export default function HomePage({ onNavigate, onModuleChange }: HomePageProps) 
       {/* Projects Grid */}
       <div className="px-6 -mt-6">
         <div className="grid grid-cols-2 gap-4">
-          {projects.map((project) => {
-            const Icon = project.icon;
-            return (
-              <button
-                key={project.id}
-                onClick={() => onNavigate(project.id)}
-                className="bg-white rounded-2xl p-5 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 active:scale-95"
-              >
-                <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${project.color} flex items-center justify-center mb-4 shadow-lg`}>
-                  <Icon className="w-7 h-7 text-white" />
-                </div>
-                <h3 className="text-base font-semibold text-gray-800 mb-1">{project.name}</h3>
-                <p className="text-xs text-gray-500 leading-relaxed">{project.description}</p>
-              </button>
-            );
-          })}
+          {projects.map((project) => (
+            <ProjectCard
+              key={project.id}
+              {...project}
+              onNavigate={onNavigate}
+            />
+          ))}
         </div>
       </div>
 

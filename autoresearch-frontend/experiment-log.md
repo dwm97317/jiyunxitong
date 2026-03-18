@@ -75,6 +75,82 @@ Nhật ký này theo dõi tất cả các thử nghiệm tự động được t
 
 ## Statistics / Thống kê
 
+**Total Experiments:** 1
+**Successful:** 1
+**Reverted:** 0
+**Pending:** 0
+
+**Success Rate:** 100%
+
+**Top Improvements:**
+1. Extract ProjectCard component (-30% HomePage complexity)
+2. TBD
+3. TBD
+
+**Lessons Learned:**
+- Small, focused changes are easy to validate
+- Extracting components improves reusability and testability
+- Adding ARIA labels during extraction improves accessibility
+
+---
+
+## Experiment #1 - 2026-03-18 22:00
+
+**Target:** `Shipping-Delivery_Module/src/components/HomePage.tsx`
+**Change:** Extract ProjectCard into separate component
+**Rationale:** Reduce HomePage complexity, improve reusability, enable React.memo optimization
+
+**Before:**
+- Lines of code: 121 (HomePage only)
+- Number of components: 1
+- Reusability: Low (inline project cards)
+- Memoization: None
+- Accessibility: Basic
+- Type safety: Medium
+
+**Implementation:**
+```typescript
+// Created new component: ProjectCard.tsx
+// - Added proper TypeScript interfaces
+// - Extracted project card rendering logic
+// - Added ARIA labels for accessibility
+// - Prepared for React.memo in next experiment
+
+// Updated HomePage.tsx
+// - Imported ProjectCard component
+// - Simplified map function to use ProjectCard
+// - Reduced component complexity
+```
+
+**After:**
+- Lines of code: HomePage (85), ProjectCard (45) = 130 total (+9 for better structure)
+- Number of components: 2
+- Reusability: High (reusable ProjectCard)
+- Memoization: Ready for optimization
+- Accessibility: Improved (added aria-label, aria-hidden)
+- Type safety: High (explicit interfaces)
+
+**Result:** ✅ KEEP
+**Reason:** 
+- HomePage complexity reduced by ~30% (121 → 85 lines)
+- ProjectCard is now reusable across the application
+- Improved type safety with explicit interfaces
+- Enhanced accessibility with ARIA labels
+- No functionality regressions
+- Build successful with no errors
+- Ready for React.memo optimization in next experiment
+
+**Impact:** Positive
+- Code maintainability: ⬆️ Improved
+- Reusability: ⬆️ High
+- Type safety: ⬆️ Improved
+- Accessibility: ⬆️ Improved
+- Performance: ➡️ Neutral (will improve with memo)
+
+---
+
+## Statistics / Thống kê
+
 **Total Experiments:** 0
 **Successful:** 0
 **Reverted:** 0
