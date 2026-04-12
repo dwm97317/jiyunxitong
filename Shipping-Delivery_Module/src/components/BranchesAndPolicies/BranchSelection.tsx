@@ -1,8 +1,28 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ChevronLeft, MoreHorizontal, Globe } from 'lucide-react';
 
 export default function BranchSelection({ onBack }: { onBack?: () => void }) {
   const [selectedId, setSelectedId] = useState<number>(1);
+  const [phoneInput, setPhoneInput] = useState<string>('');
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+  const validatePhone = (value: string): boolean => {
+    // Chinese phone number: 11 digits, starts with 1[3-9]
+    const phoneRegex = /^1[3-9]\d{9}$/;
+    return phoneRegex.test(value.replace(/\s/g, ''));
+  };
+
+  const handlePhoneChange = (value: string) => {
+    // Only allow numbers
+    value = value.replace(/[^\d]/g, '');
+    // Limit to 11 digits
+    if (value.length <= 11) {
+      setPhoneInput(value);
+      if (errors.phone) {
+        setErrors({ ...errors, phone: '' });
+      }
+    }
+  };
 
   return (
     <div className="flex flex-col h-full bg-[#F4F5F7] absolute inset-0 z-20 font-sans">
@@ -43,7 +63,16 @@ export default function BranchSelection({ onBack }: { onBack?: () => void }) {
                 <span className="text-gray-900 text-[14px] flex-1 text-right leading-snug">江西省-南昌市-中节能国际中心3号楼，XXXX室，XXX柜台</span>
              </div>
              <div className="mt-2">
-                <input type="text" placeholder="请输入电话号码" className="w-full bg-[#F4F5F7] px-4 py-3 rounded-xl text-[14px] outline-none placeholder-gray-400 focus:bg-white focus:ring-1 focus:ring-blue-500 transition-all" />
+                <input 
+                  type="text" 
+                  value={phoneInput}
+                  onChange={(e) => handlePhoneChange(e.target.value)}
+                  placeholder="请输入电话号码" 
+                  inputMode="tel"
+                  maxLength={11}
+                  className={`w-full bg-[#F4F5F7] px-4 py-3 rounded-xl text-[14px] outline-none placeholder-gray-400 focus:bg-white focus:ring-1 transition-all ${errors.phone ? 'focus:ring-red-500 text-red-500' : 'focus:ring-blue-500'}`}
+                />
+                {errors.phone && <p className="text-red-500 text-xs px-3 mt-1">{errors.phone}</p>}
              </div>
           </div>
         </div>
@@ -68,7 +97,16 @@ export default function BranchSelection({ onBack }: { onBack?: () => void }) {
                 <span className="text-gray-900 text-[14px] flex-1 text-right leading-snug">江西省-南昌市-中节能国际中心3号楼，XXXX室，XXX柜台</span>
              </div>
              <div className="mt-2">
-                <input type="text" placeholder="请输入电话号码" className="w-full bg-[#F4F5F7] px-4 py-3 rounded-xl text-[14px] outline-none placeholder-gray-400 focus:bg-white focus:ring-1 focus:ring-blue-500 transition-all" />
+                <input 
+                  type="text" 
+                  value={phoneInput}
+                  onChange={(e) => handlePhoneChange(e.target.value)}
+                  placeholder="请输入电话号码" 
+                  inputMode="tel"
+                  maxLength={11}
+                  className={`w-full bg-[#F4F5F7] px-4 py-3 rounded-xl text-[14px] outline-none placeholder-gray-400 focus:bg-white focus:ring-1 transition-all ${errors.phone ? 'focus:ring-red-500 text-red-500' : 'focus:ring-blue-500'}`}
+                />
+                {errors.phone && <p className="text-red-500 text-xs px-3 mt-1">{errors.phone}</p>}
              </div>
           </div>
         </div>

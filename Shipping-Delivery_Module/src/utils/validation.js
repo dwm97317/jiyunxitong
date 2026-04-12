@@ -110,3 +110,100 @@ export const getErrorMessage = (field, type) => {
   };
   return messages[type] || '输入有误';
 };
+
+
+// ============ ADDITIONAL VALIDATION FUNCTIONS ============
+
+/**
+ * Validate phone number (Chinese format: 11 digits, starts with 1[3-9])
+ */
+export function validatePhone(phone) {
+  const phoneRegex = /^1[3-9]\d{9}$/;
+  return phoneRegex.test(phone.replace(/\s/g, ''));
+}
+
+/**
+ * Validate currency/money value
+ */
+export function validateCurrency(value) {
+  const num = parseFloat(value);
+  return !isNaN(num) && num > 0 && num <= 999999;
+}
+
+/**
+ * Validate text length
+ */
+export function validateTextLength(text, minLength = 1, maxLength = 100) {
+  const trimmed = text.trim();
+  return trimmed.length >= minLength && trimmed.length <= maxLength;
+}
+
+/**
+ * Validate quantity (positive integer)
+ */
+export function validateQuantity(qty) {
+  const num = parseInt(qty);
+  return !isNaN(num) && num > 0 && num <= 9999 && Number.isInteger(num);
+}
+
+/**
+ * Validate email
+ */
+export function validateEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+/**
+ * Validate URL
+ */
+export function validateURL(url) {
+  try {
+    new URL(url);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Sanitize text input (remove special characters)
+ */
+export function sanitizeText(text) {
+  return text.replace(/[^\w\s\u4E00-\u9FFF]/g, '');
+}
+
+/**
+ * Sanitize number input (only digits and decimal point)
+ */
+export function sanitizeNumber(value) {
+  let sanitized = value.replace(/[^\d.]/g, '');
+  const parts = sanitized.split('.');
+  if (parts.length > 2) {
+    sanitized = parts[0] + '.' + parts.slice(1).join('');
+  }
+  return sanitized;
+}
+
+/**
+ * Sanitize phone input (only digits)
+ */
+export function sanitizePhone(phone) {
+  return phone.replace(/[^\d]/g, '');
+}
+
+/**
+ * Get validation error message
+ */
+export function getValidationErrorMessage(fieldName, validationType) {
+  const messages = {
+    required: `${fieldName}不能为空`,
+    phone: `${fieldName}格式不正确（11位数字，以1[3-9]开头）`,
+    currency: `${fieldName}必须为正数，最多999999`,
+    text: `${fieldName}长度不符合要求`,
+    quantity: `${fieldName}必须为1-9999之间的整数`,
+    email: `${fieldName}格式不正确`,
+    url: `${fieldName}格式不正确`,
+  };
+  return messages[validationType] || '输入不符合要求';
+}

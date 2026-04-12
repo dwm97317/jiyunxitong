@@ -4,7 +4,7 @@ import BottomSheet from '../../components/BottomSheet';
 import { BaseModalProps } from '../../types';
 
 interface InputModalProps extends BaseModalProps {
-  onConfirm: (val: string) => void;
+  onConfirm: (val: string, length?: number, width?: number, height?: number) => void;
 }
 
 export const WeightModal: React.FC<InputModalProps> = ({ isOpen, onClose, onConfirm }) => {
@@ -156,7 +156,7 @@ export const VolumeModal: React.FC<InputModalProps> = ({ isOpen, onClose, onConf
     setErrors(newErrors);
     
     if (Object.keys(newErrors).length === 0) {
-      onConfirm(`${l}x${w}x${h}`);
+      onConfirm(`${l}x${w}x${h}`, parseFloat(l), parseFloat(w), parseFloat(h));
     }
   };
 
