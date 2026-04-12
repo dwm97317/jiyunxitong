@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { ChevronLeft, MoreHorizontal, HelpCircle } from 'lucide-react';
 import { TabType } from '../../types';
+import { useCoreEngine } from '../../hooks/useCoreEngine';
 
 export default function PriceTimeTable({ onBack }: { onBack: () => void }) {
   const [tab, setTab] = useState<TabType>('AIR');
+  const { getPricingTiers } = useCoreEngine();
+  const pricingTiers = getPricingTiers();
 
   return (
     <div className="flex flex-col h-full bg-[#F4F5F7] absolute inset-0 z-10 font-sans">
@@ -26,6 +29,29 @@ export default function PriceTimeTable({ onBack }: { onBack: () => void }) {
       </div>
 
       <div className="flex-1 overflow-y-auto bg-white px-2 py-4 pb-12">
+        
+        {/* === 价格等级表 === */}
+        <div className="mb-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 border border-blue-100">
+          <div className="text-center font-bold text-blue-600 text-[14px] mb-3">价格等级表</div>
+          <table className="w-full text-center border-collapse text-[11px] text-gray-800">
+            <thead>
+              <tr className="bg-blue-500 text-white">
+                <th className="p-2 border border-blue-400">等级</th>
+                <th className="p-2 border border-blue-400">重量范围</th>
+                <th className="p-2 border border-blue-400">基础价格</th>
+              </tr>
+            </thead>
+            <tbody>
+              {pricingTiers.map((tier) => (
+                <tr key={tier.tier} className="hover:bg-blue-100 transition-colors">
+                  <td className="p-2 border border-blue-100 font-bold text-blue-600">Tier {tier.tier}</td>
+                  <td className="p-2 border border-blue-100">{tier.description}</td>
+                  <td className="p-2 border border-blue-100 font-bold text-green-600">¥{tier.basePrice}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
         
         {/* === BẢNG GIÁ CHI TIẾT DÙNG TABLE === */}
         <table className="w-full text-center border-collapse text-[10px] text-gray-800 shadow-sm rounded-lg overflow-hidden border border-gray-200">

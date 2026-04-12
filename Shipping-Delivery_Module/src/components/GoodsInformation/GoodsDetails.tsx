@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { ChevronLeft, MoreHorizontal, Camera, XCircle, ChevronRight, Search } from 'lucide-react';
+import { useCoreEngine } from '../../hooks/useCoreEngine';
 
 interface GoodsDetailsProps {
   onOpenSelection: () => void;
@@ -10,10 +11,28 @@ interface GoodsDetailsProps {
 const GoodsDetails: React.FC<GoodsDetailsProps> = ({ onOpenSelection, selectedGoodsName, onClearGoods }) => {
   const [weight, setWeight] = useState<number>(1);
   const [activeTags, setActiveTags] = useState<string[]>([]);
+  const [productNameInput, setProductNameInput] = useState<string>('');
+  const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
   const tags = ['去掉快递包装', '保留全部包装', '去掉产品包装', '防潮直放', '尽快出库', '贵重物品', '取出收据', '保留快递包装', '易碎物品'];
+
+  const { suggestCategory } = useCoreEngine();
+
+  // Get category suggestions
+  const categorySuggestions = useMemo(() => {
+    if (!productNameInput.trim()) {
+      return [];
+    }
+    const result = suggestCategory(productNameInput);
+    return result.success ? result.data || [] : [];
+  }, [productNameInput, suggestCategory]);
 
   const toggleTag = (tag: string) => {
     setActiveTags(prev => prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]);
+  };
+
+  const handleSelectCategory = (category: string) => {
+    setProductNameInput(category);
+    setShowSuggestions(false);
   };
 
   return (
@@ -48,12 +67,50 @@ const GoodsDetails: React.FC<GoodsDetailsProps> = ({ onOpenSelection, selectedGo
             </div>
           ) : (
             // Trạng thái trống (Ảnh 1)
-            <div 
-              className="bg-[#F8F9FA] rounded-lg p-2.5 flex items-center cursor-pointer border border-transparent hover:border-blue-200 transition-colors" 
-              onClick={onOpenSelection}
-            >
-               <Search size={18} className="text-gray-400 mr-2" />
-               <span className="text-gray-400 text-[14px]">请输入您的货物名称</span>
+            <div className="relative">
+              <div 
+                className="bg-[#F8F9FA] rounded-lg p-2.5 flex items-center cursor-pointer border border-transparent hover:border-blue-200 transition-colors" 
+              >
+                 <Search size={18} className="text-gray-400 mr-2" />
+                 <input 
+                   type="text"
+                   value={productNameInput}
+                   onChange={(e) => {
+                     setProductNameInput(e.target.value);
+                     setShowSuggestions(true);
+                   }}
+                   onFocus={() => setShowSuggestions(true)}
+                   placeholder="请输入您的货物名称"
+                   className="flex-1 bg-transparent outline-none text-[14px] text-gray-800 placeholder-gray-400"
+                 />
+              </div>
+
+              {/* Category Suggestions */}
+              {showSuggestions && categorySuggestions.length > 0 && (
+                <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg shadow-lg border border-gray-100 z-50">
+                  {categorySuggestions.map((suggestion, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => handleSelectCategory(suggestion.category)}
+                      className="w-full text-left px-4 py-3 hover:bg-blue-50 border-b border-gray-50 last:border-b-0 transition-colors"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <div className="text-gray-800 font-medium text-[14px]">{suggestion.category}</div>
+                          {suggestion.matchedKeywords.length > 0 && (
+                            <div className="text-gray-500 text-[12px] mt-1">
+                              匹配: {suggestion.matchedKeywords.join(', ')}
+                            </div>
+                          )}
+                        </div>
+                        <div className="text-blue-600 text-[12px] font-medium">
+                          {(suggestion.confidence * 100).toFixed(0)}%
+                        </div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           )}
         </div>

@@ -6,6 +6,7 @@ export default function InsuranceService() {
   const [insuranceMode, setInsuranceMode] = useState<InsuranceModeType>('STANDARD');
   const [customValue, setCustomValue] = useState<string>('');
   const [needPhoto, setNeedPhoto] = useState<boolean>(true);
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   // Giả lập logic tính tổng tiền: Cước cơ bản (120) + Phí bảo hiểm
   const basePrice = 120;
@@ -14,10 +15,37 @@ export default function InsuranceService() {
   if (insuranceMode === 'STANDARD') {
     insuranceFee = 5;
   } else if (insuranceMode === 'CUSTOM' && customValue) {
-    // Ví dụ: Phí bảo hiểm = 1% giá trị khai báo, tối thiểu 10 tệ
-    insuranceFee = Math.max(10, Math.floor(Number(customValue) * 0.01));
+    const value = parseFloat(customValue);
+    if (!isNaN(value) && value > 0) {
+      // Ví dụ: Phí bảo hiểm = 1% giá trị khai báo, tối thiểu 10 tệ
+      insuranceFee = Math.max(10, Math.floor(value * 0.01));
+    }
   }
   const totalPrice = basePrice + insuranceFee;
+
+  const validateCustomValue = (value: string): boolean => {
+    if (!value.trim()) return false;
+    const num = parseFloat(value);
+    return !isNaN(num) && num > 0 && num <= 999999;
+  };
+
+  const handleCustomValueChange = (value: string) => {
+    // Only allow numbers and decimal point
+    value = value.replace(/[^\d.]/g, '');
+    // Ensure only one decimal point
+    const parts = value.split('.');
+    if (parts.length > 2) {
+      value = parts[0] + '.' + parts.slice(1).join('');
+    }
+    // Limit to 2 decimal places
+    if (parts.length === 2 && parts[1].length > 2) {
+      value = parts[0] + '.' + parts[1].substring(0, 2);
+    }
+    setCustomValue(value);
+    if (errors.customValue) {
+      setErrors({ ...errors, customValue: '' });
+    }
+  };
 
   return (
     <div className="flex flex-col h-full bg-[#F4F5F7] absolute inset-0 z-10">
@@ -53,18 +81,23 @@ export default function InsuranceService() {
 
           {/* Form nhập Custom Value */}
           {insuranceMode === 'CUSTOM' && (
-            <div className="flex items-center justify-between py-3 border-t border-gray-100 animate-[fade-in_0.2s_ease-in]">
-              <span className="text-gray-700 text-[14px]">自定义物品价值</span>
-              <div className="flex items-center border-b border-blue-400 focus-within:border-blue-600 pb-1 transition-colors">
-                <input 
-                  type="number" 
-                  value={customValue}
-                  onChange={(e) => setCustomValue(e.target.value)}
-                  placeholder="请输入金额" 
-                  className="text-right outline-none text-blue-600 text-[16px] w-24 mr-1 placeholder-gray-300 font-bold bg-transparent"
-                />
-                <span className="text-gray-800 text-[14px]">元</span>
+            <div className="animate-[fade-in_0.2s_ease-in]">
+              <div className="flex items-center justify-between py-3 border-t border-gray-100">
+                <span className="text-gray-700 text-[14px]">自定义物品价值</span>
+                <div className="flex items-center border-b border-blue-400 focus-within:border-blue-600 pb-1 transition-colors">
+                  <input 
+                    type="text" 
+                    value={customValue}
+                    onChange={(e) => handleCustomValueChange(e.target.value)}
+                    placeholder="请输入金额" 
+                    inputMode="decimal"
+                    maxLength={10}
+                    className={`text-right outline-none text-[16px] w-24 mr-1 placeholder-gray-300 font-bold bg-transparent ${errors.customValue ? 'text-red-500' : 'text-blue-600'}`}
+                  />
+                  <span className="text-gray-800 text-[14px]">元</span>
+                </div>
               </div>
+              {errors.customValue && <p className="text-red-500 text-xs px-3 mb-2">{errors.customValue}</p>}
             </div>
           )}
 

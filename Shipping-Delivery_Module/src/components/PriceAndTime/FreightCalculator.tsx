@@ -1,12 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { ChevronLeft, MoreHorizontal, ChevronRight } from 'lucide-react';
 import { WeightModal, VolumeModal, BillingRulesModal } from './CalculatorModals';
 import { ModalStateType } from '../../types';
+import { useCoreEngine } from '../../hooks/useCoreEngine';
+import { WeightCalculationInput } from '../../types/coreEngine.types';
 
 export default function FreightCalculator({ onBack }: { onBack: () => void }) {
   const [modalState, setModalState] = useState<ModalStateType>(''); 
   const [estWeight, setEstWeight] = useState<string>('');
   const [estVolume, setEstVolume] = useState<string>('');
+  const [dimensions, setDimensions] = useState<{ length: number; width: number; height: number }>({
+    length: 0,
+    width: 0,
+    height: 0,
+  });
+
+  const { calculateWeight, getPricingTiers } = useCoreEngine();
+
+  // Calculate chargeable weight when inputs change
+  const calculationResult = useMemo(() => {
+    if (!estWeight || !dimensions.length || !dimensions.width || !dimensions.height) {
+      return null;
+    }
+
+    const input: WeightCalculationInput = {
+      actualWeight: parseFloat(estWeight),
+      length: dimensions.length || 0,
+      width: dimensions.width || 0,
+      height: dimensions.height || 0,
+    };
+
+    return calculateWeight(input);
+  }, [estWeight, dimensions, calculateWeight]);
 
   return (
     <div className="flex flex-col h-full bg-[#F4F5F7] absolute inset-0 z-10 font-sans">
@@ -50,6 +75,40 @@ export default function FreightCalculator({ onBack }: { onBack: () => void }) {
                   {estVolume ? `${estVolume} cm` : '输入包长、宽、高预估体积重 KG'}
                 </div>
               </div>
+
+              {/* 计费重量显示 */}
+              {calculationResult?.success && calculationResult.data && (
+                <div className="flex items-center justify-between py-4 border-b border-gray-50 bg-blue-50">
+                  <div className="text-gray-800 text-[15px] font-semibold">
+                    计费重量
+                  </div>
+                  <div className="text-right">
+                    <div className="text-[14px] text-gray-900 font-bold">
+                      {calculationResult.data.chargeableWeight} KG
+                    </div>
+                    <div className="text-[12px] text-gray-600">
+                      {calculationResult.data.isVolumetricHeavier ? '按体积重计费' : '按实际重计费'}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* 价格等级显示 */}
+              {calculationResult?.success && calculationResult.data && (
+                <div className="flex items-center justify-between py-4 border-b border-gray-50 bg-green-50">
+                  <div className="text-gray-800 text-[15px] font-semibold">
+                    价格等级
+                  </div>
+                  <div className="text-right">
+                    <div className="text-[14px] text-gray-900 font-bold">
+                      {calculationResult.data.tier.description}
+                    </div>
+                    <div className="text-[12px] text-gray-600">
+                      基础价格: ¥{calculationResult.data.tier.basePrice}
+                    </div>
+                  </div>
+                </div>
+              )}
 
               <div className="flex items-center justify-between py-4 cursor-pointer">
                 <div className="text-gray-800 text-[15px] flex items-center">
@@ -95,8 +154,27 @@ export default function FreightCalculator({ onBack }: { onBack: () => void }) {
       </div>
 
       {/* Render Modals */}
-      <WeightModal isOpen={modalState === 'WEIGHT'} onClose={() => setModalState('')} onConfirm={(w) => { setEstWeight(w); setModalState(''); }} />
-      <VolumeModal isOpen={modalState === 'VOLUME'} onClose={() => setModalState('')} onConfirm={(v) => { setEstVolume(v); setModalState(''); }} />
+      <WeightModal 
+        isOpen={modalState === 'WEIGHT'} 
+        onClose={() => setModalState('')} 
+        onConfirm={(w) => { 
+          setEstWeight(w); 
+          setModalState(''); 
+        }} 
+      />
+      <VolumeModal 
+        isOpen={modalState === 'VOLUME'} 
+        onClose={() => setModalState('')} 
+        onConfirm={(v, length, width, height) => { 
+          setEstVolume(v);
+          setDimensions({ 
+            length: length || 0, 
+            width: width || 0, 
+            height: height || 0 
+          });
+          setModalState(''); 
+        }} 
+      />
       <BillingRulesModal isOpen={modalState === 'RULES'} onClose={() => setModalState('')} />
     </div>
   );
